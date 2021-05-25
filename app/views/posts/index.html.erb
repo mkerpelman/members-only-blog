@@ -1,2 +1,33 @@
-<h1>Posts#index</h1>
-<p>Find me in app/views/posts/index.html.erb</p>
+<h1>All Posts</h1>
+
+
+  <table style="width:100%">
+    <tr>
+      <th align="left">Post Title</th>
+      <th align="left">Post Content</th>
+      <th align="left">Post Author</th>
+    </tr>
+    <% @posts.each do |post| %>
+    <tr>
+      <td><%= post.title %></td>
+      <td><%= post.body %></td>
+      <td>
+      <% if user_signed_in? %>
+        <%= User.find(post.user_id).name %>
+      <% else %>
+        Log in to see post author!
+      <% end %>
+      </td>
+    <% end %>
+    </tr>
+  </table>
+  <br><br><br><br>
+
+<% if user_signed_in? %>
+  <%= button_to "Sign Out", destroy_user_session_path, method: :delete  %>
+<% else %>
+  <%= button_to "Sign In", new_user_session_path %>
+  <%= button_to "Sign Up", new_user_registration_path %>
+<% end %>
+
+
